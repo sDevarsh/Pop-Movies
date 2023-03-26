@@ -1,0 +1,57 @@
+<ng-container *ngIf="tvshow">
+  <app-tv-slider [items]="[tvshow]" [isBanner]=true></app-tv-slider>
+  <p-tabView>
+    <p-tabPanel header="Overview">
+      <div class="grid">
+        <div class="col-12 md:col-3 lg:col-3">
+          <img class="poster" [src]="'https://image.tmdb.org/t/p/w400/' + tvshow.poster_path">
+        </div>
+        <div class="col-12 md:col-9 lg:col-9">
+          <h2>Overview</h2>
+          <p class="overview">{{tvshow.overview}}</p>
+          <div class="stat">
+            <div class="lable">First Air Date:</div>
+            <div class="value">{{tvshow.first_air_date | date}}</div>
+          </div>
+          <div class="stat">
+            <div class="lable">Language:</div>
+            <div class="value">{{tvshow.original_language | uppercase}}</div>
+          </div>
+          <div class="stat">
+            <div class="lable">Episode Duration:</div>
+            <div class="value">{{tvshow.episode_run_time}} min</div>
+          </div>
+          <div class="stat">
+            <div class="lable">Number of Episodes:</div>
+            <div class="value">{{tvshow.number_of_episodes}}</div>
+          </div>
+          <div class="stat">
+            <div class="lable">Status:</div>
+            <div class="value">{{tvshow.status}}</div>
+          </div>
+
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Photos">
+      <div class="grid">
+        <ng-container *ngFor="let tvshowImage of tvshowImages?.backdrops">
+          <div class="col-12 md:col-4 lg:col-4">
+            <p-image [src]="'https://image.tmdb.org/t/p/w400/'+tvshowImage.file_path" alt="Image" width="100%"
+              [preview]=true></p-image>
+          </div>
+        </ng-container>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+  <hr style="border-color: rgb(71, 71, 71);">
+  <p-carousel [numVisible]="5" *ngIf="tvshowCredits" [value]="tvshowCredits.cast">
+    <ng-template let-actor pTemplate="item">
+      <div class="actor">
+        <ng-container><p-image [src]="'https://image.tmdb.org/t/p/w342/'+actor.profile_path" alt="Image" width="100%"
+            [preview]=true></p-image>
+          <span>{{actor.name}}</span></ng-container>
+      </div>
+    </ng-template>
+  </p-carousel>
+</ng-container>
